@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie List</title>
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
+    ></script><!-- MDB -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class=" container col-md-12 justify-content-around">
+    <div class="d-flex col-md-8"><h1>Danh sách phim</h1></div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a class="btn btn-success" th:href="@{/movie/create}">Add </a>
+    </div>
+    <span th:text="${message}" th:if="${message}"style="color: green"></span>
+
+
+
+    <div class="d-flex">
+        <table class="table table-striped col-md-12">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Playlist</th>
+                <th>Action</th>
+                <!--                <th>Classroom</th>-->
+                <th></th>
+            </tr>
+            <tr th:each="movie : ${movies}">
+                <td><a th:href="@{/detail/__${movie.id}__}" th:text="${movie.title}"></a></td>
+                <td th:text="${movie.description}"></td>
+
+                <td>
+                    <ul>
+                        <li th:each="playlist : ${movie.playLists}" th:text="${playlist.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{/movie/edit/{id}(id=${movie.id})}">Edit</a>
+                    <a class="btn btn-danger"  onclick="confirmDelete(event)"  th:href="@{/movie/delete/{id}(id=${movie.id})}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm("Bạn có chắc chắn xóa?")) {
+            window.location.href = event.target.href;
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

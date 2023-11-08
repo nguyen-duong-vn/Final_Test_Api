@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Create</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-4">
+<!--        <div class="col-md-6 col-lg-4">-->
+            <div class="card">
+                <div class="card-body">
+                    <h3 th:if = "${movie.id == null}" class="text-center mb-4">Create new Movie</h3>
+                    <h3 th:unless = "${movie.id == null}" class="text-center mb-4">Edit Movie</h3>
+
+                    <form name='addStudentForm' th:action="@{/movie/create}" method='POST'
+                          enctype="multipart/form-data" th:object="${movie}">
+                        <input type="hidden" th:field="${movie.id}">
+                        <div class="form-group">
+                            <label for="title">Tên</label>
+                            <input type='text' th:field="*{title}" class="form-control" id="title" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description"> Mô tả: </label>
+                            <input type='text' th:field="*{description}" class="form-control" id="description" required/>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Danh sách playlist:</label>
+                            <div class="col-sm-9">
+                                <div class="d-flex flex-wrap">
+                                    <div th:each="playlist : ${playlists}" class="form-check mr-3 mb-2">
+                                        <input type="checkbox" th:value="${playlist.id}" th:field="*{playLists}" class="form-check-input"/>
+                                        <label class="form-check-label" th:text="${playlist.name}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label for="address">Link video</label>
+                            <input type='text' th:field="*{url}" class="form-control" id="address" required/>
+                        </div>
+                        <br>
+
+                        <div>
+                            <button name="submit" type="submit" class="btn btn-primary btn-block">Thêm</button>
+                            <button name="submit" type="submit" class="btn btn-danger btn-block">Huỷ</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
